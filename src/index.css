@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+@theme {
+  --color-primary-50: #fff5f6;
+  --color-primary-100: #ffe6e9;
+  --color-primary-200: #ffbfc7;
+  --color-primary-300: #ff99a5;
+  --color-primary-400: #ff4d5c;
+  --color-primary-500: #e53935; /* warna utama */
+  --color-primary-600: #cc2f2b;
+  --color-primary-700: #a02521;
+  --color-primary-800: #691712;
+  --color-primary-900: #2e0806;
+
+  --color-background: #ffffff;
+  --color-text: #111827;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
