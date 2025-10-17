@@ -1,30 +1,26 @@
-import { Box, Typography, Button } from "@mui/material";
-import { useAuth } from "../../context/AuthContext";
+import { Box, Typography, Paper } from "@mui/material";
 
 const Dashboard = () => {
-  const { user, logout } = useAuth();
-
   return (
-    <Box
-      className="min-h-screen flex flex-col items-center justify-center bg-gray-50"
-      sx={{ p: 4 }}
-    >
-      <Typography variant="h4" fontWeight={700} color="primary" gutterBottom>
-        Welcome {user?.email ?? "User"} 🎉
+    <Box>
+      <Typography variant="h4" fontWeight={700} gutterBottom>
+        Welcome to Dashboard 👋
       </Typography>
 
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 4 }}>
-        You have successfully logged in to the dashboard.
-      </Typography>
-
-      <Button
-        variant="outlined"
-        color="error"
-        onClick={logout}
-        sx={{ textTransform: "none" }}
+      <Paper
+        elevation={2}
+        sx={{
+          p: 3,
+          borderRadius: 3,
+          mt: 2,
+          bgcolor: "background.paper",
+        }}
       >
-        Logout
-      </Button>
+        <Typography variant="body1" color="text.secondary">
+          This is your main dashboard page. You can manage users, view
+          analytics, or customize content here.
+        </Typography>
+      </Paper>
     </Box>
   );
 };
