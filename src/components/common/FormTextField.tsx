@@ -35,15 +35,29 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
       label={label}
       type={isPassword && !showPassword ? "password" : "text"}
       fullWidth
-      size="small" // ✅ lebih ramping dari default
+      size="small"
       variant="outlined"
       error={!!errorObj}
       helperText={errorObj?.message}
+      InputLabelProps={{
+        sx: {
+          "&.Mui-focused": {
+            color: "#000", // label fokus jadi hitam
+          },
+        },
+      }}
       InputProps={{
         sx: {
           borderRadius: 2,
           fontSize: "0.9rem",
-          height: 45, // ✅ kontrol tinggi input
+          height: 45,
+          "& .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#ccc", // default border
+          },
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#000", // border saat fokus
+            borderWidth: 1.5,
+          },
         },
         startAdornment: startIcon ? (
           <InputAdornment position="start" sx={{ mr: 0.5 }}>
@@ -58,7 +72,7 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
               <IconButton
                 onClick={() => setShowPassword(!showPassword)}
                 edge="end"
-                size="small" // ✅ ikon lebih kecil
+                size="small"
                 sx={{ color: "#666" }}
               >
                 {showPassword ? (

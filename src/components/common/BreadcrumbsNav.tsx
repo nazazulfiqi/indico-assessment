@@ -1,10 +1,19 @@
-import { Breadcrumbs, Link, Typography, Box } from "@mui/material";
+import { Breadcrumbs, Link, Typography, Box, useTheme } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+
+interface BreadcrumbItem {
+  label: string;
+  href?: string;
+}
 
 interface Props {
-  paths: string[];
+  paths: BreadcrumbItem[];
 }
 
 const BreadcrumbsNav = ({ paths }: Props) => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+
   const last = paths[paths.length - 1];
 
   return (
@@ -15,13 +24,25 @@ const BreadcrumbsNav = ({ paths }: Props) => {
             key={i}
             underline="hover"
             color="inherit"
-            sx={{ cursor: "pointer", fontSize: 14 }}
+            sx={{
+              cursor: "pointer",
+              fontSize: 14,
+              transition: "color 0.2s",
+              "&:hover": { color: theme.palette.primary.main },
+            }}
+            onClick={() => path.href && navigate(path.href)}
           >
-            {path}
+            {path.label}
           </Link>
         ))}
-        <Typography color="text.primary" fontSize={14}>
-          {last}
+
+        {/* Active (last) breadcrumb */}
+        <Typography
+          fontSize={14}
+          fontWeight={500}
+          sx={{ color: theme.palette.primary.main }}
+        >
+          {last.label}
         </Typography>
       </Breadcrumbs>
     </Box>

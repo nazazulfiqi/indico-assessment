@@ -3,15 +3,15 @@ import {
   Box,
   Typography,
   IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
   CircularProgress,
   TextField,
+  TableContainer,
+  Paper,
+  Table,
+  TableHead,
+  TableRow,
+  TableCell,
+  TableBody,
   Stack,
 } from "@mui/material";
 import { Add, Edit, Delete } from "@mui/icons-material";
@@ -69,103 +69,169 @@ const UserListPage = () => {
     );
 
   return (
-    <Box>
+    <div className="max-w-7xl mx-auto space-y-6">
       {/* Breadcrumb */}
-      <div className="bg-white p-4 h-full flex items-center rounded-lg mb-6">
-        <BreadcrumbsNav paths={["Dashboard", "User Management"]} />
+      <div className="bg-white p-4 rounded-lg shadow-sm">
+        <BreadcrumbsNav
+          paths={[
+            { label: "Dashboard", href: "/dashboard" },
+            { label: "User Management", href: "/users" },
+          ]}
+        />
       </div>
 
-      {/* Header */}
-      <div className="bg-white p-4 rounded-lg">
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          mb={3}
-        >
+      {/* Header Section */}
+      <div className="bg-white p-4 rounded-lg shadow-sm">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
           <Typography variant="h6" fontWeight={600}>
             User Management
           </Typography>
-        </Stack>
+        </div>
 
-        {/* Search & Filter */}
-        <Stack
-          direction={{ xs: "column", sm: "row" }}
-          spacing={2}
-          mb={2}
-          alignItems={{ xs: "stretch", sm: "center" }}
-        >
+        {/* Search + Add Button */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-4">
           <TextField
-            placeholder="Search by name..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             size="small"
             fullWidth
             sx={{ maxWidth: { xs: "100%", sm: 300 } }}
+            placeholder="Search by name..."
           />
 
-          <CommonButton onClick={handleAdd} startIcon={<Add />}>
+          <CommonButton
+            onClick={handleAdd}
+            startIcon={<Add />}
+            color="info"
+            sx={{
+              width: { xs: "100%", sm: "auto" }, // full di mobile, auto di tablet/desktop
+              minWidth: 120, // optional, supaya tidak terlalu kecil
+            }}
+          >
             Add User
           </CommonButton>
-        </Stack>
+        </div>
 
-        {/* Table */}
-        <TableContainer
-          component={Paper}
-          sx={{ borderRadius: 2, boxShadow: 1 }}
-        >
-          <Table>
-            <TableHead sx={{ backgroundColor: "#f5f6fa" }}>
-              <TableRow>
-                <TableCell>ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell>Email</TableCell>
-                <TableCell>Company</TableCell>
-                <TableCell align="center">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {pagedUsers.map((user: User) => (
-                <TableRow key={user.id} hover>
-                  <TableCell>{user.id}</TableCell>
-                  <TableCell>{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>{user.company?.name || "-"}</TableCell>
-                  <TableCell align="center">
-                    <Stack direction="row" spacing={1} justifyContent="center">
-                      <IconButton
-                        color="primary"
-                        onClick={() => handleEdit(user)}
-                        size="small"
-                      >
-                        <Edit fontSize="small" />
-                      </IconButton>
-                      <IconButton
-                        sx={{
-                          color: "#e74c3c",
-                          "&:hover": { backgroundColor: "rgba(231,76,60,0.1)" },
-                        }}
-                        onClick={() => handleDelete(user.id)}
-                        size="small"
-                      >
-                        <Delete fontSize="small" />
-                      </IconButton>
-                    </Stack>
+        {/* Table Section with MUI - Horizontal Scroll */}
+        <Box sx={{ width: "100%", overflowX: "auto" }}>
+          <TableContainer
+            component={Paper}
+            sx={{
+              borderRadius: 2,
+              boxShadow: "0 2px 8px rgba(0,0,0,0.05)",
+            }}
+          >
+            <Table sx={{ minWidth: 650 }}>
+              <TableHead sx={{ backgroundColor: "#f5f6fa" }}>
+                <TableRow>
+                  <TableCell sx={{ whiteSpace: "nowrap", fontWeight: 600 }}>
+                    ID
+                  </TableCell>
+                  <TableCell sx={{ whiteSpace: "nowrap", fontWeight: 600 }}>
+                    Name
+                  </TableCell>
+                  <TableCell sx={{ whiteSpace: "nowrap", fontWeight: 600 }}>
+                    Email
+                  </TableCell>
+                  <TableCell sx={{ whiteSpace: "nowrap", fontWeight: 600 }}>
+                    Company
+                  </TableCell>
+                  <TableCell
+                    align="center"
+                    sx={{ whiteSpace: "nowrap", fontWeight: 600 }}
+                  >
+                    Actions
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {pagedUsers.length > 0 ? (
+                  pagedUsers.map((user: User) => (
+                    <TableRow key={user.id} hover>
+                      <TableCell sx={{ whiteSpace: "nowrap" }}>
+                        {user.id}
+                      </TableCell>
+                      <TableCell sx={{ whiteSpace: "nowrap" }}>
+                        {user.name}
+                      </TableCell>
+                      <TableCell sx={{ whiteSpace: "nowrap" }}>
+                        {user.email}
+                      </TableCell>
+                      <TableCell sx={{ whiteSpace: "nowrap" }}>
+                        {user.company?.name || "-"}
+                      </TableCell>
+                      <TableCell align="center">
+                        <Stack
+                          direction="row"
+                          spacing={1}
+                          justifyContent="center"
+                          sx={{ whiteSpace: "nowrap" }}
+                        >
+                          {/* Edit Button */}
+                          <IconButton
+                            onClick={() => handleEdit(user)}
+                            size="small"
+                            sx={{
+                              bgcolor: "#f1c40f", // kuning
+                              color: "#fff", // icon putih
+                              borderRadius: 1, // rounded kecil, kotak
+                              width: 28,
+                              height: 28,
+                              "&:hover": {
+                                bgcolor: "#d4ac0d",
+                              },
+                              p: 0, // padding nol supaya kotak kompak
+                            }}
+                          >
+                            <Edit fontSize="inherit" sx={{ fontSize: 16 }} />
+                          </IconButton>
+
+                          {/* Delete Button */}
+                          <IconButton
+                            onClick={() => handleDelete(user.id)}
+                            size="small"
+                            sx={{
+                              bgcolor: "#e74c3c", // merah
+                              color: "#fff",
+                              borderRadius: 1,
+                              width: 28,
+                              height: 28,
+                              "&:hover": {
+                                bgcolor: "#c0392b",
+                              },
+                              p: 0,
+                            }}
+                          >
+                            <Delete fontSize="inherit" sx={{ fontSize: 16 }} />
+                          </IconButton>
+                        </Stack>
+                      </TableCell>
+                    </TableRow>
+                  ))
+                ) : (
+                  <TableRow>
+                    <TableCell colSpan={5} align="center">
+                      <Typography color="text.secondary" py={2}>
+                        No users found
+                      </Typography>
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Box>
 
         {/* Pagination */}
-        <PaginationControl
-          totalPages={totalPages}
-          currentPage={page}
-          onChange={setPage}
-          totalItems={filteredUsers.length}
-          pageSize={PAGE_SIZE}
-        />
+        <div className="mt-4">
+          <PaginationControl
+            totalPages={totalPages}
+            currentPage={page}
+            onChange={setPage}
+            totalItems={filteredUsers.length}
+            pageSize={PAGE_SIZE}
+          />
+        </div>
 
         {/* Form Dialog */}
         <UserFormDialog
@@ -174,7 +240,7 @@ const UserListPage = () => {
           user={selectedUser}
         />
       </div>
-    </Box>
+    </div>
   );
 };
 

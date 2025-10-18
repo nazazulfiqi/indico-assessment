@@ -27,8 +27,9 @@ const DashboardLayout = () => {
         component="main"
         sx={{
           flexGrow: 1,
-          width: { md: `calc(100% - ${drawerWidth}px)` },
-          ml: { md: `${drawerWidth}px` }, // ✅ tambahkan ini
+          width: "100%",
+          minWidth: 0, // ✅ PENTING: mencegah overflow
+          ml: { md: `${drawerWidth}px` }, // ✅ margin-left di desktop untuk sidebar
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#E5E7EB",
@@ -36,7 +37,7 @@ const DashboardLayout = () => {
       >
         <Topbar onMenuClick={handleDrawerToggle} />
 
-        <Box component="main" sx={{ flexGrow: 1, p: { xs: 2, md: 4 } }}>
+        <Box sx={{ flexGrow: 1, p: { xs: 2, md: 4 }, minWidth: 0 }}>
           <Outlet />
         </Box>
       </Box>

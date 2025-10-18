@@ -61,6 +61,7 @@ const PaginationControl = ({
             onClick={() => onChange(i + 1)}
             variant={i + 1 === currentPage ? "contained" : "outlined"}
             size="small"
+            color="info"
             sx={{
               minWidth: 32,
               height: 28,

@@ -1,11 +1,12 @@
 import { useEffect } from "react";
-import type { User } from "../../hooks/useUsers"; // ⚠️ type-only import
+import type { User } from "../../hooks/useUsers";
 import {
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
   Box,
+  Typography,
 } from "@mui/material";
 import { useForm } from "react-hook-form";
 import FormTextField from "../../components/common/FormTextField";
@@ -37,7 +38,7 @@ const UserFormDialog = ({ open, onClose, user }: Props) => {
       : { name: "", email: "", company: "" },
   });
 
-  // 🔁 Reset form setiap kali user berubah (misal dari Add → Edit)
+  // Reset form setiap kali user berubah
   useEffect(() => {
     reset(
       user
@@ -71,14 +72,48 @@ const UserFormDialog = ({ open, onClose, user }: Props) => {
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
-      <DialogTitle>{user ? "Edit User" : "Add User"}</DialogTitle>
+      <DialogTitle>
+        {user ? "Edit User" : "Add User"}
+        <Typography variant="subtitle2" color="text.secondary" mt={0.5}>
+          {user
+            ? "Update user details below."
+            : "Fill in the form to add a new user."}
+        </Typography>
+      </DialogTitle>
+
       <DialogContent>
-        <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-          <FormTextField name="name" label="Name" register={register} />
-          <FormTextField name="email" label="Email" register={register} />
-          <FormTextField name="company" label="Company" register={register} />
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{ mt: 2 }} // jarak dari title
+        >
+          <FormTextField
+            name="name"
+            label="Name"
+            register={register}
+            sx={{ mb: 2 }}
+          />
+          <FormTextField
+            name="email"
+            label="Email"
+            register={register}
+            sx={{ mb: 2 }}
+          />
+          <FormTextField
+            name="company"
+            label="Company"
+            register={register}
+            sx={{ mb: 2 }}
+          />
+
           <DialogActions sx={{ px: 0 }}>
-            <CommonButton type="submit" disabled={isLoading}>
+            <CommonButton
+              type="submit"
+              disabled={isLoading}
+              //   color={user ? "warning" : "info"}
+              sx={{ bgcolor: user ? "#f1c40f" : "#0276aa" }} // warna tombol sesuai aksi
+            >
               {isLoading ? "Saving..." : user ? "Update" : "Create"}
             </CommonButton>
           </DialogActions>

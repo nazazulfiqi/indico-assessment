@@ -2,7 +2,6 @@ import {
   AppBar,
   Toolbar,
   IconButton,
-  Typography,
   Box,
   Avatar,
   Menu,
@@ -41,15 +40,8 @@ const Topbar = ({ onMenuClick }: { onMenuClick: () => void }) => {
           <MenuIcon />
         </IconButton>
 
-        <Typography
-          variant="h6"
-          sx={{ fontWeight: 600, color: "primary.main" }}
-        >
-          Dashboard
-        </Typography>
-
         {/* Right: User avatar */}
-        <Box>
+        <Box sx={{ ml: "auto" }}>
           <IconButton onClick={handleMenuOpen}>
             <Avatar sx={{ bgcolor: "primary.main" }}>
               {user?.email?.[0]?.toUpperCase() ?? "U"}
