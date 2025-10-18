@@ -1,4 +1,3 @@
-// src/components/common/FormTextField.tsx
 import { useState } from "react";
 import { TextField, InputAdornment, IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
@@ -42,7 +41,7 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
       InputLabelProps={{
         sx: {
           "&.Mui-focused": {
-            color: "#000", // label fokus jadi hitam
+            color: "#000",
           },
         },
       }}
@@ -52,10 +51,10 @@ const FormTextField: React.FC<FormTextFieldProps> = ({
           fontSize: "0.9rem",
           height: 45,
           "& .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#ccc", // default border
+            borderColor: "#ccc",
           },
           "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-            borderColor: "#000", // border saat fokus
+            borderColor: "#000",
             borderWidth: 1.5,
           },
         },

@@ -1,19 +1,11 @@
 import { createContext, useContext, useState, type ReactNode } from "react";
-
-type User = {
-  email: string;
-};
-
-interface AuthContextType {
-  user: User | null;
-  isAuthenticated: boolean;
-  login: (email: string, password: string) => boolean;
-  logout: () => void;
-}
+import type { User, AuthContextType } from "../types/auth";
+import { toast } from "react-toastify";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const AUTH_STORAGE_KEY = "auth_user_v1";
+const AUTH_STORAGE_KEY =
+  import.meta.env.VITE_AUTH_STORAGE_KEY || "auth_user_default";
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const stored =
@@ -25,7 +17,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(initialUser);
 
   const login = (email: string, password: string): boolean => {
-    // static / hardcoded auth
     if (email === "admin@example.com" && password === "123456") {
       const u: User = { email };
       setUser(u);
@@ -38,6 +29,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => {
     setUser(null);
     localStorage.removeItem(AUTH_STORAGE_KEY);
+    toast.info("Logged out successfully.");
   };
 
   return (

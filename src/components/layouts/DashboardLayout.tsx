@@ -15,21 +15,19 @@ const DashboardLayout = () => {
     <Box sx={{ display: "flex", minHeight: "100vh", bgcolor: "grey.50" }}>
       <CssBaseline />
 
-      {/* Sidebar */}
       <Sidebar
         drawerWidth={drawerWidth}
         mobileOpen={mobileOpen}
         onDrawerToggle={handleDrawerToggle}
       />
 
-      {/* Main Content */}
       <Box
         component="main"
         sx={{
           flexGrow: 1,
           width: "100%",
-          minWidth: 0, // ✅ PENTING: mencegah overflow
-          ml: { md: `${drawerWidth}px` }, // ✅ margin-left di desktop untuk sidebar
+          minWidth: 0,
+          ml: { md: `${drawerWidth}px` },
           display: "flex",
           flexDirection: "column",
           backgroundColor: "#E5E7EB",

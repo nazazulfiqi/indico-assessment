@@ -21,18 +21,16 @@ const CommonButton: React.FC<CommonButtonProps> = ({
   sx = {},
   ...rest
 }) => {
-  // ✅ pastikan ini di-cast ke tipe SxProps<Theme>
   const commonStyles: SxProps<Theme> = {
-    py: 1, // ⬅️ lebih ramping (sebelumnya 1.5)
+    py: 1,
     borderRadius: 2,
     textTransform: "none",
     fontWeight: 600,
-    fontSize: "0.9rem", // ⬅️ lebih kecil (sebelumnya 1rem)
+    fontSize: "0.9rem",
     lineHeight: 1.4,
-    minHeight: 40, // ⬅️ atur tinggi minimal agar seragam
+    minHeight: 40,
   };
 
-  // 🔗 jika ada "to", jadikan Button sebagai Link
   const component = to ? RouterLink : "button";
 
   return (

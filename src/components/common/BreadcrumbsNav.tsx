@@ -36,7 +36,6 @@ const BreadcrumbsNav = ({ paths }: Props) => {
           </Link>
         ))}
 
-        {/* Active (last) breadcrumb */}
         <Typography
           fontSize={14}
           fontWeight={500}

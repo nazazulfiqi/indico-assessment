@@ -2,6 +2,7 @@ import { Stack, IconButton, Typography, useMediaQuery } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import CommonButton from "./CommonButton";
 import { useTheme } from "@mui/material/styles";
+import { useMemo } from "react";
 
 interface Props {
   totalPages: number;
@@ -18,13 +19,22 @@ const PaginationControl = ({
   totalItems,
   pageSize,
 }: Props) => {
-  if (totalPages <= 1) return null;
-
-  const start = (currentPage - 1) * pageSize + 1;
-  const end = Math.min(currentPage * pageSize, totalItems);
-
   const theme = useTheme();
   const isSmall = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const start = useMemo(
+    () => (totalItems === 0 ? 0 : (currentPage - 1) * pageSize + 1),
+    [currentPage, pageSize, totalItems]
+  );
+
+  const end = useMemo(
+    () => Math.min(currentPage * pageSize, totalItems),
+    [currentPage, pageSize, totalItems]
+  );
+
+  const pageNumbers = useMemo(() => {
+    return Array.from({ length: Math.max(totalPages, 1) }, (_, i) => i + 1);
+  }, [totalPages]);
 
   return (
     <Stack
@@ -34,12 +44,12 @@ const PaginationControl = ({
       justifyContent="space-between"
       mt={3}
     >
-      {/* Info text */}
       <Typography variant="body2" color="text.secondary">
-        Menampilkan {start}–{end} dari {totalItems} entri
+        {totalItems > 0
+          ? `Menampilkan ${start}–${end} dari ${totalItems} entri`
+          : "Tidak ada data"}
       </Typography>
 
-      {/* Pagination buttons */}
       <Stack
         direction="row"
         spacing={0.5}
@@ -55,11 +65,11 @@ const PaginationControl = ({
           <ChevronLeft fontSize="small" />
         </IconButton>
 
-        {Array.from({ length: totalPages }, (_, i) => (
+        {pageNumbers.map((pageNum) => (
           <CommonButton
-            key={i}
-            onClick={() => onChange(i + 1)}
-            variant={i + 1 === currentPage ? "contained" : "outlined"}
+            key={`page-${pageNum}`}
+            onClick={() => onChange(pageNum)}
+            variant={pageNum === currentPage ? "contained" : "outlined"}
             size="small"
             color="info"
             sx={{
@@ -69,13 +79,13 @@ const PaginationControl = ({
               padding: "2px 6px",
             }}
           >
-            {i + 1}
+            {pageNum}
           </CommonButton>
         ))}
 
         <IconButton
           size="small"
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || totalPages === 0}
           onClick={() => onChange(currentPage + 1)}
           sx={{ color: "text.secondary" }}
         >

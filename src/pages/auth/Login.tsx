@@ -16,6 +16,7 @@ import FormTextField from "../../components/common/FormTextField";
 import EmailIcon from "@mui/icons-material/Email";
 import LockIcon from "@mui/icons-material/Lock";
 import CommonButton from "../../components/common/CommonButton";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const { login } = useAuth();
@@ -36,8 +37,14 @@ const Login = () => {
     setError("");
     try {
       const success = login(data.email, data.password);
-      if (success) navigate("/dashboard");
-      else setError("Invalid email or password");
+
+      if (success) {
+        toast.success("Login successfully");
+        navigate("/dashboard");
+      } else {
+        toast.error("Invalid email or password");
+        // setError("Invalid email or password");
+      }
     } finally {
       setLoading(false);
     }
@@ -62,7 +69,6 @@ const Login = () => {
           bgcolor: "white",
         }}
       >
-        {/* Left: Illustration */}
         <Box
           sx={{
             flex: 1,
@@ -81,7 +87,6 @@ const Login = () => {
           />
         </Box>
 
-        {/* Right: Form Section */}
         <Box
           sx={{
             flex: 1,
@@ -112,7 +117,6 @@ const Login = () => {
 
             <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
               <Stack spacing={2}>
-                {/* ✅ otomatis kasih jarak antar elemen */}
                 <FormTextField
                   name="email"
                   label="Email"

@@ -45,7 +45,6 @@ const Sidebar = ({ drawerWidth, mobileOpen, onDrawerToggle }: any) => {
           }}
         />
 
-        {/* Tombol close — hanya tampil di mobile */}
         <IconButton onClick={onDrawerToggle} sx={{ display: { md: "none" } }}>
           <CloseIcon />
         </IconButton>
@@ -129,7 +128,6 @@ const Sidebar = ({ drawerWidth, mobileOpen, onDrawerToggle }: any) => {
         {drawer}
       </Drawer>
 
-      {/* Desktop drawer */}
       <Drawer
         variant="permanent"
         sx={{

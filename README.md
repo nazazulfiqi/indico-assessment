@@ -1,73 +1,92 @@
-# React + TypeScript + Vite
+# 🧑‍💻 User Management UI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+✨ **User Management UI** adalah aplikasi React sederhana untuk mengelola user dengan **CRUD**, **search**, dan **pagination**.
 
-Currently, two official plugins are available:
+Dibuat sebagai bagian dari **Assessment Frontend Developer**.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* ⚛️ **React 19** (Functional Components + Hooks)
+* 📦 **React Query** untuk data fetching & state management
+* 🎨 **Material UI (MUI v7)** untuk UI components
+* 📝 **React Hook Form** untuk form handling
+* 🎨 **Tailwind CSS v4** untuk utility-first styling & responsive utilities
+* 🧪 **Zod** untuk schema validation (digunakan bersama React Hook Form)
+* 💧 **Axios** untuk API requests (wrapper di folder `api/`)
+* 🌐 **React Router v7** untuk routing
+* 🛡️ **TypeScript** untuk type safety
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 📋 Fitur
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+* 📊 **Dashboard** Ringkasan visual Card dan Grafik
+* 👀 Menampilkan daftar user dari API
+* ➕ **Add User**
+* ✏️ **Edit User**
+* 🗑️ **Delete User**
+* 🔍 **Search** user berdasarkan nama
+* 📄 **Pagination** dinamis
+* 🖥️ **Responsive**: mobile & desktop
+* 👤 User avatar & menu dengan logout
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+---
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## ⚙️ Instalasi & Menjalankan
+
+1. **Clone repository**
+
+```bash
+git clone https://github.com/nazazulfiqi/indico-assessment.git
+cd indico-assessment
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. **Install dependencies**
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
+# atau
+yarn install
 ```
+
+3. **Jalankan project**
+
+```bash
+npm run dev
+# atau
+yarn dev
+```
+
+Aplikasi akan berjalan di:
+`http://localhost:5173/`
+
+---
+
+## 🛠️ Implementation Highlights
+
+* React + TypeScript
+* React Query untuk data fetching & state lokal
+* **CRUD** operations langsung terlihat di UI tanpa reload
+* Pagination & search dinamis
+* Material UI customization
+* Responsive design untuk desktop & mobile
+* Form handling menggunakan **React Hook Form**
+* State update saat create/edit/delete user
+
+---
+
+## 🌐 API
+
+* Digunakan API publik: [JSONPlaceholder - Users](https://jsonplaceholder.typicode.com/users)
+* Data user baru hanya tersimpan di **state lokal** (mocked)
+
+---
+
+## 👤 Author
+
+* **Naza Zulfiqi**
+* 🌐 [www.nazazulfiqi.me](https://www.nazazulfiqi.me)
+* 💻 [GitHub](https://github.com/nazazulfiqi)
+* 🔗 [LinkedIn](https://www.linkedin.com/in/nazazulfiqi)

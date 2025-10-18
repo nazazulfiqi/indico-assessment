@@ -1,12 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { userApi } from "../api/userApi";
-
-export type User = {
-  id: number;
-  name: string;
-  email: string;
-  company?: { name: string };
-};
+import type { User } from "../types/user";
 
 export const useUsers = () => {
   const queryClient = useQueryClient();
@@ -19,7 +13,6 @@ export const useUsers = () => {
   const createUser = useMutation({
     mutationFn: userApi.create,
     onSuccess: (newUserData) => {
-      // Tambah ke cache React Query
       queryClient.setQueryData<User[]>(["users"], (old = []) => {
         const tempId = Math.max(...old.map((u) => u.id), 0) + 1;
         return [...old, { ...newUserData, id: tempId }];
