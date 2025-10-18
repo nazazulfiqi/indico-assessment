@@ -1,6 +1,11 @@
-import { Stack, IconButton, Typography, useMediaQuery } from "@mui/material";
-import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import CommonButton from "./CommonButton";
+import {
+  Stack,
+  IconButton,
+  Typography,
+  useMediaQuery,
+  Button,
+} from "@mui/material";
+import { ChevronLeft, ChevronRight, MoreHoriz } from "@mui/icons-material";
 import { useTheme } from "@mui/material/styles";
 import { useMemo } from "react";
 
@@ -32,9 +37,29 @@ const PaginationControl = ({
     [currentPage, pageSize, totalItems]
   );
 
-  const pageNumbers = useMemo(() => {
-    return Array.from({ length: Math.max(totalPages, 1) }, (_, i) => i + 1);
-  }, [totalPages]);
+  // ✅ Pastikan visiblePages minimal tetap ada [1]
+  const visiblePages = useMemo(() => {
+    if (totalPages === 0) return [1];
+
+    const delta = 2;
+    const pages: (number | "ellipsis")[] = [];
+    const left = Math.max(1, currentPage - delta);
+    const right = Math.min(totalPages, currentPage + delta);
+
+    if (left > 1) {
+      pages.push(1);
+      if (left > 2) pages.push("ellipsis");
+    }
+
+    for (let i = left; i <= right; i++) pages.push(i);
+
+    if (right < totalPages) {
+      if (right < totalPages - 1) pages.push("ellipsis");
+      pages.push(totalPages);
+    }
+
+    return pages;
+  }, [currentPage, totalPages]);
 
   return (
     <Stack
@@ -43,49 +68,74 @@ const PaginationControl = ({
       alignItems={isSmall ? "flex-start" : "center"}
       justifyContent="space-between"
       mt={3}
+      sx={{ width: "100%" }}
     >
-      <Typography variant="body2" color="text.secondary">
+      {/* Info teks */}
+      <Typography
+        variant="body2"
+        color="text.secondary"
+        sx={{
+          fontSize: "0.7rem",
+          width: "100%",
+          textAlign: isSmall ? "center" : "left",
+        }}
+      >
         {totalItems > 0
           ? `Menampilkan ${start}–${end} dari ${totalItems} entri`
           : "Tidak ada data"}
       </Typography>
 
+      {/* Pagination */}
       <Stack
         direction="row"
         spacing={0.5}
         alignItems="center"
-        justifyContent="flex-end"
+        sx={{
+          mt: isSmall ? 1 : 0,
+          justifyContent: isSmall ? "center" : "flex-end",
+          width: "100%",
+        }}
       >
         <IconButton
           size="small"
-          disabled={currentPage === 1}
+          disabled={currentPage === 1 || totalItems === 0}
           onClick={() => onChange(currentPage - 1)}
           sx={{ color: "text.secondary" }}
         >
           <ChevronLeft fontSize="small" />
         </IconButton>
 
-        {pageNumbers.map((pageNum) => (
-          <CommonButton
-            key={`page-${pageNum}`}
-            onClick={() => onChange(pageNum)}
-            variant={pageNum === currentPage ? "contained" : "outlined"}
-            size="small"
-            color="info"
-            sx={{
-              minWidth: 32,
-              height: 28,
-              fontSize: "0.75rem",
-              padding: "2px 6px",
-            }}
-          >
-            {pageNum}
-          </CommonButton>
-        ))}
+        {visiblePages.map((page, idx) =>
+          page === "ellipsis" ? (
+            <IconButton key={`ellipsis-${idx}`} disabled size="small">
+              <MoreHoriz fontSize="small" />
+            </IconButton>
+          ) : (
+            <Button
+              key={`page-${page}`}
+              onClick={() => totalItems > 0 && onChange(page)}
+              variant={page === currentPage ? "contained" : "outlined"}
+              size="small"
+              color="info"
+              disabled={totalItems === 0}
+              sx={{
+                minWidth: 28,
+                height: 26,
+                fontSize: "0.7rem",
+                padding: "0 4px",
+                lineHeight: 1,
+              }}
+            >
+              {page}
+            </Button>
+          )
+        )}
 
         <IconButton
           size="small"
-          disabled={currentPage === totalPages || totalPages === 0}
+          disabled={
+            currentPage === totalPages || totalPages === 0 || totalItems === 0
+          }
           onClick={() => onChange(currentPage + 1)}
           sx={{ color: "text.secondary" }}
         >

@@ -17,7 +17,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(initialUser);
 
   const login = (email: string, password: string): boolean => {
-    if (email === "admin@example.com" && password === "123456") {
+    if (email === "indico@example.com" && password === "123456") {
       const u: User = { email };
       setUser(u);
       localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(u));

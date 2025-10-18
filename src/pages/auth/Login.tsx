@@ -154,7 +154,7 @@ const Login = () => {
               align="center"
               sx={{ color: "text.secondary" }}
             >
-              Use: <b>admin@example.com</b> / <b>123456</b>
+              Use: <b>indico@example.com</b> / <b>123456</b>
             </Typography>
           </CardContent>
         </Box>

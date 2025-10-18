@@ -92,11 +92,8 @@ const UserPage = () => {
     setDeleteDialog({ open: false, userId: null, userName: "" });
   };
 
-  const handleFormClose = (success?: boolean, message?: string) => {
+  const handleFormClose = () => {
     setOpenForm(false);
-    if (success && message) {
-      toast.success(message);
-    }
   };
 
   const filteredUsers = users.filter((u) =>
