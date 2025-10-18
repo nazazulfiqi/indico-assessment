@@ -4,6 +4,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import DashboardLayout from "../components/layouts/DashboardLayout";
 import DashboardPage from "../pages/dashboard/DashboardPage";
 import UserPage from "../pages/user/UserPage";
+import NotFoundPage from "../pages/not-found/NotFoundPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+  { path: "*", element: <NotFoundPage /> },
 ]);
 
 export const AppRouter = () => {
