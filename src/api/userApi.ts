@@ -7,6 +7,10 @@ export const userApi = {
     const res = await axios.get(API_URL);
     return res.data;
   },
+  filterByName: async (name: string) => {
+    const res = await axios.get(`${API_URL}?name=${encodeURIComponent(name)}`);
+    return res.data; // langsung array
+  },
   getById: async (id: number) => {
     const res = await axios.get(`${API_URL}/${id}`);
     return res.data;

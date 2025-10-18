@@ -45,7 +45,6 @@ const UserFormDialog = ({ open, onClose, user }: Props) => {
       : { name: "", email: "", company: "" },
   });
 
-  // Reset form setiap kali user berubah
   useEffect(() => {
     reset(
       user
@@ -66,7 +65,6 @@ const UserFormDialog = ({ open, onClose, user }: Props) => {
     };
 
     if (user) {
-      // Update User
       updateUser.mutate(
         { id: user.id, data: payload },
         {
@@ -83,7 +81,6 @@ const UserFormDialog = ({ open, onClose, user }: Props) => {
         }
       );
     } else {
-      // Create User
       createUser.mutate(payload, {
         onSuccess: () => {
           toast.success(`User "${data.name}" created successfully!`);

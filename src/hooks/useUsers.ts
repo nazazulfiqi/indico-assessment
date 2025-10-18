@@ -39,5 +39,11 @@ export const useUsers = () => {
     },
   });
 
-  return { usersQuery, createUser, updateUser, deleteUser };
+    const filterByName = async (name: string): Promise<User[]> => {
+    return await userApi.filterByName(name);
+  };
+
+  
+
+  return { usersQuery, createUser, updateUser, deleteUser , filterByName };
 };

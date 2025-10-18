@@ -37,7 +37,6 @@ const PaginationControl = ({
     [currentPage, pageSize, totalItems]
   );
 
-  // ✅ Pastikan visiblePages minimal tetap ada [1]
   const visiblePages = useMemo(() => {
     if (totalPages === 0) return [1];
 
@@ -70,7 +69,6 @@ const PaginationControl = ({
       mt={3}
       sx={{ width: "100%" }}
     >
-      {/* Info teks */}
       <Typography
         variant="body2"
         color="text.secondary"
@@ -85,7 +83,6 @@ const PaginationControl = ({
           : "Tidak ada data"}
       </Typography>
 
-      {/* Pagination */}
       <Stack
         direction="row"
         spacing={0.5}
