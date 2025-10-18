@@ -3,20 +3,24 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { loginSchema, type LoginSchema } from "../../validators/auth.validator";
 import {
   Box,
-  Button,
   Card,
   CardContent,
-  TextField,
   Typography,
   Divider,
+  Stack,
 } from "@mui/material";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import FormTextField from "../../components/common/FormTextField";
+import EmailIcon from "@mui/icons-material/Email";
+import LockIcon from "@mui/icons-material/Lock";
+import CommonButton from "../../components/common/CommonButton";
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
   const {
@@ -27,12 +31,15 @@ const Login = () => {
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = (data: LoginSchema) => {
-    const success = login(data.email, data.password);
-    if (success) {
-      navigate("/dashboard");
-    } else {
-      setError("Invalid email or password");
+  const onSubmit = async (data: LoginSchema) => {
+    setLoading(true);
+    setError("");
+    try {
+      const success = login(data.email, data.password);
+      if (success) navigate("/dashboard");
+      else setError("Invalid email or password");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -104,27 +111,25 @@ const Login = () => {
             </Typography>
 
             <Box component="form" onSubmit={handleSubmit(onSubmit)} noValidate>
-              <TextField
-                label="Email"
-                type="email"
-                fullWidth
-                variant="outlined"
-                {...register("email")}
-                error={!!errors.email}
-                helperText={errors.email?.message}
-                sx={{ mb: 3 }}
-              />
-
-              <TextField
-                label="Password"
-                type="password"
-                fullWidth
-                variant="outlined"
-                {...register("password")}
-                error={!!errors.password}
-                helperText={errors.password?.message}
-                sx={{ mb: 2 }}
-              />
+              <Stack spacing={2}>
+                {/* ✅ otomatis kasih jarak antar elemen */}
+                <FormTextField
+                  name="email"
+                  label="Email"
+                  type="email"
+                  register={register}
+                  errorObj={errors.email}
+                  startIcon={<EmailIcon />}
+                />
+                <FormTextField
+                  name="password"
+                  label="Password"
+                  type="password"
+                  register={register}
+                  errorObj={errors.password}
+                  startIcon={<LockIcon />}
+                />
+              </Stack>
 
               {error && (
                 <Typography color="error" variant="body2" sx={{ mb: 2 }}>
@@ -132,23 +137,9 @@ const Login = () => {
                 </Typography>
               )}
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="primary"
-                fullWidth
-                size="large"
-                sx={{
-                  mt: 1,
-                  py: 1.5,
-                  borderRadius: 2,
-                  textTransform: "none",
-                  fontWeight: 600,
-                  fontSize: "1rem",
-                }}
-              >
+              <CommonButton type="submit" loading={loading} sx={{ mt: 2 }}>
                 Login
-              </Button>
+              </CommonButton>
             </Box>
 
             <Divider sx={{ my: 3 }} />

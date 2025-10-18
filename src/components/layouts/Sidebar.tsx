@@ -19,7 +19,7 @@ const Sidebar = ({ drawerWidth, mobileOpen, onDrawerToggle }: any) => {
 
   const menuItems = [
     { text: "Dashboard", icon: <DashboardIcon />, path: "/dashboard" },
-    { text: "Users", icon: <PeopleIcon />, path: "/dashboard/users" },
+    { text: "Users", icon: <PeopleIcon />, path: "/users" },
   ];
 
   const drawer = (

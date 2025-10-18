@@ -31,6 +31,7 @@ const DashboardLayout = () => {
           ml: { md: `${drawerWidth}px` }, // ✅ tambahkan ini
           display: "flex",
           flexDirection: "column",
+          backgroundColor: "#E5E7EB",
         }}
       >
         <Topbar onMenuClick={handleDrawerToggle} />

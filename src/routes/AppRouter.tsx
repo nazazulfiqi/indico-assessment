@@ -1,20 +1,20 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Login from "../pages/auth/Login";
 import ProtectedRoute from "./ProtectedRoute";
-import Dashboard from "../pages/dashboard/Dashboard";
 import DashboardLayout from "../components/layouts/DashboardLayout";
+import Dashboard from "../pages/dashboard/Dashboard";
+import UserListPage from "../pages/user/UserPage";
 
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
   {
-    element: <ProtectedRoute />,
+    element: <ProtectedRoute />, // proteksi semua route di bawah
     children: [
       {
-        path: "/dashboard",
-        element: <DashboardLayout />,
+        element: <DashboardLayout />, // pakai layout dashboard
         children: [
-          { index: true, element: <Dashboard /> },
-          //   { path: "users", element: <Users /> },
+          { path: "dashboard", element: <Dashboard /> }, // /dashboard
+          { path: "users", element: <UserListPage /> }, // /user
         ],
       },
     ],
